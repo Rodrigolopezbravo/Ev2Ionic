@@ -4,6 +4,9 @@ import { LoginPage } from './login/login.page';
 import { RegistroPage } from './registro/registro.page';
 import { AuthGuard } from './services/auth.guard'
 import { NotFoundPage } from './not-found/not-found.page';
+import { ScannerComponent } from './scanner/scanner.component';
+
+
 
 const routes: Routes = [
 
@@ -35,6 +38,8 @@ const routes: Routes = [
     path: 'not-found',
     loadChildren: () => import('./not-found/not-found.module').then( m => m.NotFoundPageModule)
   },
+  { path: 'scanner', component: ScannerComponent,
+  canActivate: [AuthGuard] },
   { path: '404', component: NotFoundPage },
   { path: '**', redirectTo: '/404', pathMatch: 'full' },
 ];

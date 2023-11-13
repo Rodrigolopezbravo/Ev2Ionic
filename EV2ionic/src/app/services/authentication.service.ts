@@ -1,4 +1,4 @@
-// authentication.service.ts
+
 import { Injectable } from '@angular/core';
 import { Preferences } from '@capacitor/preferences';
 
@@ -34,13 +34,6 @@ export class AuthenticationService {
     return false;
   }
 
-  logout() {
-    // Lógica de cierre de sesión, establece this.isAuthenticatedFlag a false
-    this.isAuthenticatedFlag = false;
-  }
 
-  login() {
-    // Método para establecer la bandera de autenticación
-    this.isAuthenticatedFlag = true;
-  }
+
 }

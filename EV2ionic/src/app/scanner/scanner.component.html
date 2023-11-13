@@ -1,0 +1,5 @@
+<!-- scanner.component.html -->
+<zxing-scanner #scanner
+               [device]="selectedDevice"
+               (deviceChange)="onDeviceSelect($event)">
+</zxing-scanner>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ScannerComponent } from 'src/app/scanner/scanner.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inicio',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InicioPage implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
+  }
+
+  openScanner() {
+    this.router.navigate(['/scanner']);
   }
 
 }
