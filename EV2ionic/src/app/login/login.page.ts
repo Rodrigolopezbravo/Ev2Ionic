@@ -1,8 +1,8 @@
+// login.page.ts
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { AlertController, NavController } from '@ionic/angular';
-import { Preferences } from '@capacitor/preferences';
-
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -13,31 +13,29 @@ export class LoginPage implements OnInit {
 
   formularioLogin: FormGroup;
 
-  constructor(public fb: FormBuilder, public alertController: AlertController, public navCtrl: NavController) { 
+  constructor(
+    public fb: FormBuilder,
+    public alertController: AlertController,
+    public navCtrl: NavController,
+    private authService: AuthenticationService
+  ) {
     this.formularioLogin = this.fb.group({
       'usuario': new FormControl("", Validators.required),
       'password': new FormControl("", Validators.required),
     });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   async ingresar() {
     var f = this.formularioLogin.value;
+    const usuario = f.usuario;
+    const password = f.password;
 
-    // Construir la clave utilizando el nombre de usuario
-    const clave = `usuario_${f.usuario}`;
-
-    // Obtener el usuario de las preferencias de Capacitor
-    const usuarioString = await Preferences.get({ key: clave });
-
-    if (usuarioString && usuarioString.value) {
-      const usuario = JSON.parse(usuarioString.value);
-
-      if (usuario.password === f.password) {
+    try {
+      if (await this.authService.authenticate(usuario, password)) {
         console.log('Ingresado correctamente');
-        this.navCtrl.navigateRoot('inicio')
+        this.navCtrl.navigateRoot('inicio');
       } else {
         const alert = await this.alertController.create({
           header: 'Datos incorrectos',
@@ -46,13 +44,8 @@ export class LoginPage implements OnInit {
         });
         await alert.present();
       }
-    } else {
-      const alert = await this.alertController.create({
-        header: 'Usuario no encontrado',
-        message: 'No se encontró un usuario con el nombre proporcionado',
-        buttons: ['Aceptar']
-      });
-      await alert.present();
+    } catch (error) {
+      console.error('Error al intentar autenticar:', error);
     }
   }
 }
