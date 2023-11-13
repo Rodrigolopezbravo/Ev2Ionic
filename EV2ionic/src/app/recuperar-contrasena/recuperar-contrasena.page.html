@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Recuperar contraseña</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Ingrese sus datos</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <form [formGroup]="formulario" (submit)="cambiarContrasena()">
+        <ion-item>
+          <ion-label position="floating">Usuario</ion-label>
+          <ion-input formControlName="usuario"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Contraseña</ion-label>
+          <ion-input formControlName="nuevaContrasena" type="password"></ion-input>
+        </ion-item>
+        <ion-button type="submit">
+          Cambiar contraseña
+        </ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
