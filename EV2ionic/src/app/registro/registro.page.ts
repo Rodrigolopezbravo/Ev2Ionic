@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { AlertController } from '@ionic/angular';
 import { Preferences } from '@capacitor/preferences';
 import { ApiService } from 'src/app/services/api-region.service';
+import { Plugins } from '@capacitor/core';
 
 @Component({
   selector: 'app-registro',
