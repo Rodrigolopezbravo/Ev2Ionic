@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { Preferences } from '@capacitor/preferences';
+import { ApiService } from 'src/app/services/api-region.service';
 
 @Component({
   selector: 'app-registro',
@@ -11,14 +12,34 @@ import { Preferences } from '@capacitor/preferences';
 export class RegistroPage implements OnInit {
 
   formularioRegistro: FormGroup;
+  regions: any[] = [];
+  communes: any[] = [];
 
-  constructor(public fb: FormBuilder, public alertController: AlertController) { 
+  constructor(public fb: FormBuilder, public alertController: AlertController, private apiService: ApiService) { 
     this.formularioRegistro = this.fb.group({
       'nombre': new FormControl("", Validators.required),
       'apellido': new FormControl("", Validators.required),
       'rut': new FormControl("", Validators.required),
       'usuario': new FormControl("", Validators.required),
       'password': new FormControl("", Validators.required),
+      'region': new FormControl(this.regions.length > 0 ? this.regions[0].id : "", Validators.required),
+      'comuna': new FormControl("", Validators.required)
+    });
+  }
+
+  ionViewDidEnter() {
+    this.loadRegions();
+  }
+
+  loadRegions() {
+    this.apiService.getRegions().subscribe((response) => {
+      this.regions = response.data;
+    });
+  }
+
+  loadCommunes(regionId: number) {
+    this.apiService.getCommunes(regionId).subscribe((response) => {
+      this.communes = response.data;
     });
   }
 
