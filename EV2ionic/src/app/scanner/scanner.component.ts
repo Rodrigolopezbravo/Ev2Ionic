@@ -33,10 +33,11 @@ export class ScannerComponent implements AfterViewInit {
     });
 
     this.scanner.scanComplete.subscribe((result: Result) => {
-      // Handle the scanned result
-      console.log(result.getText());
-
-      // You can perform any actions with the scanned result here
+      // Verificar si result no es nulo ni indefinido
+      if (result) {
+        console.log(result.getText());
+        // Realizar acciones adicionales con el resultado escaneado aquí
+      }
     });
 
     // Start scanning
